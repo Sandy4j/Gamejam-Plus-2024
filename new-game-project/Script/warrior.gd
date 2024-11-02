@@ -8,7 +8,7 @@ func _ready():
 	max_health = 150.0
 	health = max_health
 	attack_damage = 20.0
-	attack_range = 30.0
+	attack_range = 60.0
 	attack_cooldown = 1.0
 	move_speed = 100.0
 	detection_range = 150.0
@@ -25,3 +25,10 @@ func attack():
 	can_attack = false
 	if attack_timer:
 		attack_timer.start()
+
+func take_damage(damage: float):
+	health -= damage
+	if health_bar:
+		health_bar.value = health
+	if health <= 0:
+		die()

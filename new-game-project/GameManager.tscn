@@ -2,12 +2,10 @@
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_0x5yr"]
 [ext_resource type="TileSet" uid="uid://byuc80ldil4av" path="res://Tilest.tres" id="2_mpfr3"]
-[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="3_4tu7q"]
 [ext_resource type="Script" path="res://enemy_commander.gd" id="3_83djf"]
 [ext_resource type="Script" path="res://player_manager.gd" id="3_ojgvj"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_es5cn"]
-size = Vector2(118, 117)
+[ext_resource type="PackedScene" uid="uid://dxad1os81npv3" path="res://Environment/base_enemy.tscn" id="4_ekjqu"]
+[ext_resource type="PackedScene" uid="uid://unepcw1mo3pt" path="res://Environment/base_player.tscn" id="6_k4cok"]
 
 [sub_resource type="SystemFont" id="SystemFont_1f4eu"]
 subpixel_positioning = 2
@@ -37,18 +35,10 @@ tile_set = ExtResource("2_mpfr3")
 script = ExtResource("3_83djf")
 
 [node name="SpawnAI" type="Marker2D" parent="EnemyCommander"]
-position = Vector2(1056, 343)
+position = Vector2(994, 351)
 
-[node name="BaseEnemy" type="Area2D" parent="EnemyCommander"]
-position = Vector2(-20, -113)
-scale = Vector2(0.5, 0.5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyCommander/BaseEnemy"]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_es5cn")
-
-[node name="Sprite2D" type="Sprite2D" parent="EnemyCommander/BaseEnemy"]
-texture = ExtResource("3_4tu7q")
+[node name="BaseEnemy" parent="EnemyCommander" instance=ExtResource("4_ekjqu")]
+position = Vector2(1081, 345)
 
 [node name="PlayerManager" type="Node2D" parent="."]
 position = Vector2(50, 460)
@@ -57,16 +47,7 @@ script = ExtResource("3_ojgvj")
 [node name="SpawnP" type="Marker2D" parent="PlayerManager"]
 position = Vector2(51, -111)
 
-[node name="BasePlayer" type="Area2D" parent="PlayerManager"]
-position = Vector2(-20, -113)
-scale = Vector2(0.5, 0.5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerManager/BasePlayer"]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_es5cn")
-
-[node name="Sprite2D" type="Sprite2D" parent="PlayerManager/BasePlayer"]
-texture = ExtResource("3_4tu7q")
+[node name="BasePlayer" parent="PlayerManager" instance=ExtResource("6_k4cok")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://unepcw1mo3pt"]
+
+[ext_resource type="Script" path="res://Script/base.gd" id="1_y5aaw"]
+[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="2_5nvq1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_es5cn"]
+size = Vector2(118, 117)
+
+[node name="BasePlayer" type="StaticBody2D"]
+position = Vector2(-20, -113)
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_y5aaw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_es5cn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_5nvq1")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -50.0
+offset_top = -130.0
+offset_right = 50.0
+offset_bottom = -80.0

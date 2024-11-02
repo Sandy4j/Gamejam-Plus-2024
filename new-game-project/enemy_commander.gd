@@ -16,8 +16,8 @@ var unit_costs = {
 }
 
 var unit_scenes = {
-	"warrior": preload("res://Actor/Warrior.tscn"),
-	"archer": preload("res://Actor/Archer.tscn")
+	"warrior": preload("res://AI/Warrior B.tscn"),
+	"archer": preload("res://AI/ArcherB.tscn")
 }
 
 # Strategi spawn unit
