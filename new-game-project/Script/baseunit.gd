@@ -1,9 +1,8 @@
-# base_unit.gd
 extends CharacterBody2D
 class_name BaseUnit
 
 # Properti dasar unit
-var team: String = "player"  # Default team
+var team: String = "player"
 var health: float = 100.0
 var max_health: float = 100.0
 var move_speed: float = 100.0
@@ -17,15 +16,18 @@ var can_attack: bool = true
 @onready var animation_player: AnimationPlayer = $AnimationPlayer if has_node("AnimationPlayer") else null
 @onready var sprite: Sprite2D = $Sprite2D if has_node("Sprite2D") else null
 @onready var health_bar: ProgressBar = $HealthBar if has_node("HealthBar") else null
+
+# Tambahan node untuk area deteksi dan serangan
+@onready var detection_area: Area2D = $DetectionArea if has_node("DetectionArea") else null
 @onready var attack_raycast: RayCast2D = $AttackRayCast if has_node("AttackRayCast") else null
 
-# Target variables
-var target: Node2D = null  # Bisa BaseUnit atau StaticBody2D (base)
-var enemy_base: Node2D = null
-var detection_range: float = 200.0
+# Target detection
+var target: BaseUnit = null
+var detection_range: float = 100.0
 
 func _ready():
-	await get_tree().create_timer(0.1).timeout
+	# Pastikan semua node yang diperlukan ada
+	await get_tree().create_timer(0.1).timeout # Tunggu sedikit untuk memastikan semua node siap
 	
 	if health_bar:
 		health_bar.max_value = max_health
@@ -35,69 +37,81 @@ func _ready():
 		attack_timer.wait_time = attack_cooldown
 		attack_timer.one_shot = true
 	
-	if attack_raycast:
-		attack_raycast.target_position = Vector2(attack_range, 0)
-		# Set collision mask sesuai dengan layer collision yang digunakan
-		attack_raycast.collision_mask = 2  # Sesuaikan dengan layer units dan base
+	# Setup detection area
+	if detection_area:
+		detection_area.connect("body_entered", Callable(self, "_on_detection_area_entered"))
+		detection_area.connect("body_exited", Callable(self, "_on_detection_area_exited"))
 	
+	# Setup attack raycast
+	if attack_raycast:
+		attack_raycast.enabled = true
+		attack_raycast.target_position = Vector2(attack_range, 0)
+		attack_raycast.collision_mask = 2  # Sesuaikan dengan layer unit lawan
+	
+	# Set team dan arah
 	setup_team(team)
-	find_enemy_base()
 
 func _physics_process(_delta):
 	if health <= 0:
 		return
 		
-	update_target()
+	find_target_with_detection_area()
 	
 	if target:
 		var distance = global_position.distance_to(target.global_position)
 		if distance <= attack_range and can_attack:
-			attack()
+			check_attack_raycast()
 		else:
 			move_to_target()
 	else:
 		move_forward()
+
+func find_target_with_detection_area():
+	if detection_area:
+		var overlapping_bodies = detection_area.get_overlapping_bodies()
+		var closest_target = null
+		var closest_distance = detection_range
+		
+		for body in overlapping_bodies:
+			if body is BaseUnit and body.team != team:
+				var distance = global_position.distance_to(body.global_position)
+				if distance < closest_distance:
+					closest_distance = distance
+					closest_target = body
+		
+		target = closest_target
+
+func check_attack_raycast():
+	if attack_raycast and attack_raycast.is_colliding():
+		var collider = attack_raycast.get_collider()
+		if collider is BaseUnit and collider.team != team:
+			attack()
 
 func setup_team(new_team: String):
 	team = new_team
 	if sprite:
 		if team == "enemy":
 			sprite.flip_h = true
-			move_speed = -abs(move_speed)
+			move_speed = -abs(move_speed)  # Pastikan bergerak ke kiri
 			if attack_raycast:
-				attack_raycast.target_position.x = -abs(attack_raycast.target_position.x)
+				attack_raycast.target_position.x = -attack_range
 		else:
 			sprite.flip_h = false
-			move_speed = abs(move_speed)
+			move_speed = abs(move_speed)   # Pastikan bergerak ke kanan
 			if attack_raycast:
-				attack_raycast.target_position.x = abs(attack_raycast.target_position.x)
+				attack_raycast.target_position.x = attack_range
 
+func _on_detection_area_entered(body):
+	# Tambahan logika jika diperlukan saat unit masuk area deteksi
+	pass
+
+func _on_detection_area_exited(body):
+	# Tambahan logika jika diperlukan saat unit keluar area deteksi
+	pass
+
+# Fungsi-fungsi lain tetap sama seperti sebelumnya
 func set_team(new_team: String):
 	setup_team(new_team)
-
-func find_enemy_base():
-	var base_group = "enemy_base" if team == "player" else "player_base"
-	var bases = get_tree().get_nodes_in_group(base_group)
-	if bases.size() > 0:
-		enemy_base = bases[0]
-
-func update_target():
-	# Check for units first using raycast
-	if attack_raycast and attack_raycast.is_colliding():
-		var collider = attack_raycast.get_collider()
-		if collider is BaseUnit and collider.team != team:
-			target = collider
-			return
-		elif collider.is_in_group("player_base") and team == "enemy":
-			target = collider
-			return
-		elif collider.is_in_group("enemy_base") and team == "player":
-			target = collider
-			return
-	
-	# If no unit found, target the enemy base
-	if enemy_base and is_instance_valid(enemy_base):
-		target = enemy_base
 
 func move_to_target():
 	if target and is_instance_valid(target):
@@ -110,35 +124,40 @@ func move_forward():
 	move_and_slide()
 
 func attack():
-	if not can_attack or not target:
+	if not can_attack:
 		return
 		
 	can_attack = false
 	if attack_timer:
 		attack_timer.start()
 	
-	# Check if target is in range using raycast
-	if attack_raycast and attack_raycast.is_colliding():
-		var collider = attack_raycast.get_collider()
-		if collider == target:
-			if target.has_method("take_damage"):
-				target.take_damage(attack_damage)
-			#play_attack_animation()
+	if target and is_instance_valid(target) and target.has_method("take_damage"):
+		target.take_damage(attack_damage)
+		play_attack_animation()
 
-
-	#else:
-		#play_hit_animation()
+func take_damage(damage: float):
+	health -= damage
+	if health_bar:
+		health_bar.value = health
+	
+	if health <= 0:
+		die()
+	else:
+		play_hit_animation()
 
 func die():
+	# Disable collision dan physics
 	set_physics_process(false)
 	if has_node("CollisionShape2D"):
 		$CollisionShape2D.set_deferred("disabled", true)
-	#play_death_animation()
-	#
-	#await get_tree().create_timer(1.0).timeout
+	
+	# Play death animation
+	play_death_animation()
+	
+	# Remove dari scene
+	await get_tree().create_timer(1.0).timeout
 	queue_free()
 
-# Animation functions tetap sama...
 func play_attack_animation():
 	if animation_player and animation_player.has_animation("attack"):
 		animation_player.play("attack")

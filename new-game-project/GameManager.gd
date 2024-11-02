@@ -4,6 +4,9 @@ extends Node2D
 @onready var gold_label: Label = $CanvasLayer/Control/gold_label
 @onready var notification_label: Label = $CanvasLayer/Control/notification_label
 @onready var Egold_label: Label = $CanvasLayer/Control/Egold_label
+@onready var player_base = $PlayerManager/BasePlayer
+@onready var enemy_base = $EnemyCommander/BaseEnemy
+@onready var UI = $CanvasLayer/UI
 
 var player_commander: PlayerManager
 var enemy_commander: EnemyCommanderManager
@@ -23,7 +26,6 @@ func _ready():
 	enemy_commander.gold_updated.connect(_on_enemy_gold_updated)
 	enemy_commander.unit_spawned.connect(_on_enemy_unit_spawned)
 	command_input.connect("text_submitted", _on_command_submitted)
-	
 	gold_label.text = "Gold: " + str(player_commander.get_current_gold())
 	Egold_label.text = "Gold: " + str(enemy_commander.get_current_gold())
 	notification_label.text = ""

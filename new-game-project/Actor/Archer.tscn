@@ -1,7 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://w2tfvl6rq2js"]
+[gd_scene load_steps=7 format=3 uid="uid://w2tfvl6rq2js"]
 
 [ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_h52ab"]
 [ext_resource type="Script" path="res://Script/archer.gd" id="1_sd18r"]
+
+[sub_resource type="Animation" id="Animation_gmkas"]
+resource_name = "Walk"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ns20"]
+_data = {
+"Walk": SubResource("Animation_gmkas")
+}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b7461"]
 radius = 58.4637
@@ -18,6 +26,11 @@ script = ExtResource("1_sd18r")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0, 1)
 texture = ExtResource("1_h52ab")
+
+[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4ns20")
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_b7461")

@@ -19,6 +19,8 @@ script = ExtResource("1_ab7nw")
 modulate = Color(0.986208, 0.424457, 0.261711, 1)
 texture = ExtResource("1_xvjjv")
 
+[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_5bi86")
 
