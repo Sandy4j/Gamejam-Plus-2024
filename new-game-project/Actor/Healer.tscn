@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bivbtkubgq8ik"]
+
+[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_y2lpm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_12lme"]
+radius = 58.4637
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xgtkl"]
+radius = 200.0
+
+[node name="Healer" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_y2lpm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_12lme")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_xgtkl")
