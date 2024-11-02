@@ -9,6 +9,7 @@ size = Vector2(118, 117)
 [node name="BaseEnemy" type="StaticBody2D"]
 position = Vector2(1110, 346)
 scale = Vector2(0.5, 0.5)
+collision_mask = 7
 script = ExtResource("1_q28ob")
 team = "enemy"
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://mt4rljoc7yrm"]
+[gd_scene load_steps=6 format=3 uid="uid://mt4rljoc7yrm"]
 
 [ext_resource type="Script" path="res://Script/archer.gd" id="1_2b2am"]
 [ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_u8bdy"]
@@ -9,10 +9,12 @@ radius = 58.4637
 [sub_resource type="CircleShape2D" id="CircleShape2D_gde5l"]
 radius = 250.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_urn5j"]
+radius = 50.0
+
 [node name="ArcherB" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
-collision_layer = 2
-collision_mask = 3
+collision_mask = 7
 script = ExtResource("1_2b2am")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -41,7 +43,9 @@ scale = Vector2(2, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_gde5l")
 
-[node name="AttackRayCast" type="RayCast2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="."]
 scale = Vector2(2, 2)
-target_position = Vector2(0, 0)
 collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_urn5j")

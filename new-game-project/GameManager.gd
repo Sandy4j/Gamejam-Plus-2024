@@ -12,6 +12,7 @@ var player_commander: PlayerManager
 var enemy_commander: EnemyCommanderManager
 
 func _ready():
+	add_to_group("game_manager")
 	player_commander = PlayerManager.new()
 	player_commander.set_spawn_point($PlayerManager/SpawnP)
 
@@ -19,8 +20,6 @@ func _ready():
 	enemy_commander.set_spawn_point($EnemyCommander/SpawnAI)
 	add_child(enemy_commander)
 
-	enemy_commander.set_difficulty("medium")
-	
 	player_commander.gold_updated.connect(_on_player_gold_updated)
 	player_commander.notification_sent.connect(show_notification)
 	enemy_commander.gold_updated.connect(_on_enemy_gold_updated)
@@ -30,8 +29,8 @@ func _ready():
 	Egold_label.text = "Gold: " + str(enemy_commander.get_current_gold())
 	notification_label.text = ""
 
-func _on_gold_timer_timeout():
-	player_commander.add_gold(5)
+#func _on_gold_timer_timeout():
+	#player_commander.add_gold(5)
 
 func _on_player_gold_updated(new_amount: int):
 	gold_label.text = "Gold: " + str(new_amount)

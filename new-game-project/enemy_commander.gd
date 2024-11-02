@@ -31,6 +31,10 @@ var current_strategy: String = "balanced"
 var spawn_point: Node2D
 var active: bool = true
 
+func add_gold(amount: int):
+	gold += amount
+	gold_updated.emit(gold)
+
 func _init(initial_gold: int = 100):
 	gold = initial_gold
 
@@ -49,9 +53,6 @@ func start_ai_loop():
 func think_and_act():
 	if not active or not spawn_point:
 		return
-		
-	# Update gold
-	add_gold(5)
 	
 	# Pilih unit untuk di-spawn berdasarkan strategi saat ini
 	var unit_to_spawn = choose_unit_to_spawn()
@@ -59,10 +60,6 @@ func think_and_act():
 	# Coba spawn unit jika gold cukup
 	if can_afford(unit_to_spawn):
 		spawn_unit(unit_to_spawn)
-
-func add_gold(amount: int):
-	gold += amount
-	gold_updated.emit(gold)
 
 func can_afford(unit_name: String) -> bool:
 	return gold >= unit_costs.get(unit_name, 0)
@@ -107,18 +104,6 @@ func update_strategy(player_gold: int, player_unit_count: int):
 
 func get_current_gold():
 	return gold
-
-func set_difficulty(difficulty: String):
-	match difficulty:
-		"easy":
-			min_spawn_delay = 5.0
-			max_spawn_delay = 10.0
-		"medium":
-			min_spawn_delay = 3.0
-			max_spawn_delay = 7.0
-		"hard":
-			min_spawn_delay = 2.0
-			max_spawn_delay = 5.0
 
 func stop():
 	active = false

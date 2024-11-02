@@ -1,174 +1,173 @@
 extends CharacterBody2D
 class_name BaseUnit
 
-# Properti dasar unit
+enum UnitState { MOVING, ATTACKING, DEAD }
+
+@export var move_speed: float = 100.0
+@export var max_health: float = 100.0
+@export var attack_damage: float = 10.0
+@export var attack_speed: float = 1.0
+
+var current_state: UnitState = UnitState.MOVING
+var current_health: float
 var team: String = "player"
-var health: float = 100.0
-var max_health: float = 100.0
-var move_speed: float = 100.0
-var attack_damage: float = 10.0
-var attack_range: float = 50.0
-var attack_cooldown: float = 1.0
-var can_attack: bool = true
+var target: Node2D = null
+var enemy_base: Node2D = null  # Changed type to Node2D to handle both base types
+var attack_timer: float = 0.0
 
-# Node references
-@onready var attack_timer: Timer = $AttackTimer if has_node("AttackTimer") else null
-@onready var animation_player: AnimationPlayer = $AnimationPlayer if has_node("AnimationPlayer") else null
-@onready var sprite: Sprite2D = $Sprite2D if has_node("Sprite2D") else null
-@onready var health_bar: ProgressBar = $HealthBar if has_node("HealthBar") else null
+@onready var detection_area: Area2D = $DetectionArea
+@onready var attack_area: Area2D = $AttackArea
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var health_bar: ProgressBar = $HealthBar
 
-# Tambahan node untuk area deteksi dan serangan
-@onready var detection_area: Area2D = $DetectionArea if has_node("DetectionArea") else null
-@onready var attack_raycast: RayCast2D = $AttackRayCast if has_node("AttackRayCast") else null
 
-# Target detection
-var target: BaseUnit = null
-var detection_range: float = 100.0
+const KILL_REWARD: int = 20  
 
 func _ready():
-	# Pastikan semua node yang diperlukan ada
-	await get_tree().create_timer(0.1).timeout # Tunggu sedikit untuk memastikan semua node siap
+	current_health = max_health
+	update_health_bar()
 	
-	if health_bar:
-		health_bar.max_value = max_health
-		health_bar.value = health
+	detection_area.body_entered.connect(_on_detection_area_body_entered)
+	detection_area.body_exited.connect(_on_detection_area_body_exited)
+	attack_area.body_entered.connect(_on_attack_area_body_entered)
+	attack_area.body_exited.connect(_on_attack_area_body_exited)
 	
-	if attack_timer:
-		attack_timer.wait_time = attack_cooldown
-		attack_timer.one_shot = true
-	
-	# Setup detection area
-	if detection_area:
-		detection_area.connect("body_entered", Callable(self, "_on_detection_area_entered"))
-		detection_area.connect("body_exited", Callable(self, "_on_detection_area_exited"))
-	
-	# Setup attack raycast
-	if attack_raycast:
-		attack_raycast.enabled = true
-		attack_raycast.target_position = Vector2(attack_range, 0)
-		attack_raycast.collision_mask = 2  # Sesuaikan dengan layer unit lawan
-	
-	# Set team dan arah
-	setup_team(team)
+	find_enemy_base()
 
-func _physics_process(_delta):
-	if health <= 0:
-		return
-		
-	find_target_with_detection_area()
+func find_enemy_base() -> void:
+	if not is_inside_tree():
+		await ready
 	
-	if target:
-		var distance = global_position.distance_to(target.global_position)
-		if distance <= attack_range and can_attack:
-			check_attack_raycast()
-		else:
-			move_to_target()
+	# Check for both types of bases
+	var target_groups = []
+	if team == "player":
+		target_groups.append("enemy_base")
 	else:
-		move_forward()
+		target_groups.append("player_base")
+	
+	for group in target_groups:
+		var bases = get_tree().get_nodes_in_group(group)
+		for base in bases:
+			# Check if base is either GameBase or GameBased
+			if (base is GameBase or base is GameBased) and base.team != team:
+				enemy_base = base
+				return
 
-func find_target_with_detection_area():
-	if detection_area:
-		var overlapping_bodies = detection_area.get_overlapping_bodies()
-		var closest_target = null
-		var closest_distance = detection_range
+func _physics_process(delta: float) -> void:
+	match current_state:
+		UnitState.MOVING:
+			move(delta)
+		UnitState.ATTACKING:
+			attack(delta)
+		UnitState.DEAD:
+			queue_free()
+
+func move(delta: float) -> void:
+	if not target and enemy_base and is_instance_valid(enemy_base):
+		target = enemy_base
 		
-		for body in overlapping_bodies:
-			if body is BaseUnit and body.team != team:
-				var distance = global_position.distance_to(body.global_position)
-				if distance < closest_distance:
-					closest_distance = distance
-					closest_target = body
-		
-		target = closest_target
-
-func check_attack_raycast():
-	if attack_raycast and attack_raycast.is_colliding():
-		var collider = attack_raycast.get_collider()
-		if collider is BaseUnit and collider.team != team:
-			attack()
-
-func setup_team(new_team: String):
-	team = new_team
-	if sprite:
-		if team == "enemy":
-			sprite.flip_h = true
-			move_speed = -abs(move_speed)  # Pastikan bergerak ke kiri
-			if attack_raycast:
-				attack_raycast.target_position.x = -attack_range
-		else:
-			sprite.flip_h = false
-			move_speed = abs(move_speed)   # Pastikan bergerak ke kanan
-			if attack_raycast:
-				attack_raycast.target_position.x = attack_range
-
-func _on_detection_area_entered(body):
-	# Tambahan logika jika diperlukan saat unit masuk area deteksi
-	pass
-
-func _on_detection_area_exited(body):
-	# Tambahan logika jika diperlukan saat unit keluar area deteksi
-	pass
-
-# Fungsi-fungsi lain tetap sama seperti sebelumnya
-func set_team(new_team: String):
-	setup_team(new_team)
-
-func move_to_target():
 	if target and is_instance_valid(target):
 		var direction = (target.global_position - global_position).normalized()
-		velocity = direction * abs(move_speed)
+		velocity = direction * move_speed
+		sprite.flip_h = direction.x < 0
 		move_and_slide()
 
-func move_forward():
-	velocity = Vector2(move_speed, 0)
-	move_and_slide()
+func check_for_enemies() -> void:
+	var closest_enemy = null
+	var closest_distance = INF
+	
+	for body in detection_area.get_overlapping_bodies():
+		if body == self or not is_instance_valid(body):
+			continue
+			
+		if body.has_method("set_team") and body.team != team:
+			var distance = global_position.distance_to(body.global_position)
+			if distance < closest_distance:
+				closest_distance = distance
+				closest_enemy = body
+	
+	if closest_enemy:
+		target = closest_enemy
+		current_state = UnitState.MOVING
+	elif enemy_base and is_instance_valid(enemy_base):
+		target = enemy_base
+		current_state = UnitState.MOVING
 
-func attack():
-	if not can_attack:
+func attack(delta: float) -> void:
+	if not target or not is_instance_valid(target):
+		current_state = UnitState.MOVING
+		check_for_enemies()
 		return
 		
-	can_attack = false
-	if attack_timer:
-		attack_timer.start()
-	
-	if target and is_instance_valid(target) and target.has_method("take_damage"):
-		target.take_damage(attack_damage)
-		play_attack_animation()
+	attack_timer += delta
+	if attack_timer >= 1.0 / attack_speed:
+		attack_timer = 0.0
+		deal_damage(target)
 
-func take_damage(damage: float):
-	health -= damage
-	if health_bar:
-		health_bar.value = health
+func deal_damage(target_node: Node2D) -> void:
+	if target_node.has_method("take_damage"):
+		target_node.take_damage(attack_damage)
+
+func take_damage(amount: float) -> void:
+	current_health -= amount
+	update_health_bar()
 	
-	if health <= 0:
+	if current_health <= 0:
 		die()
-	else:
-		play_hit_animation()
 
-func die():
-	# Disable collision dan physics
-	set_physics_process(false)
-	if has_node("CollisionShape2D"):
-		$CollisionShape2D.set_deferred("disabled", true)
-	
-	# Play death animation
-	play_death_animation()
-	
-	# Remove dari scene
-	await get_tree().create_timer(1.0).timeout
+func die() -> void:
+	var game_manager = get_tree().get_first_node_in_group("game_manager")
+	if game_manager != null:
+		if team == "player":
+			if is_instance_valid(game_manager.enemy_commander):
+				game_manager.enemy_commander.add_gold(KILL_REWARD)
+				game_manager.show_notification("Enemy killed your unit! (+{0} gold)".format([KILL_REWARD]))
+		else:
+			if is_instance_valid(game_manager.player_commander):
+				game_manager.player_commander.add_gold(KILL_REWARD)
+				game_manager.show_notification("You killed an enemy unit! (+{0} gold)".format([KILL_REWARD]))
+	current_state = UnitState.DEAD
 	queue_free()
 
-func play_attack_animation():
-	if animation_player and animation_player.has_animation("attack"):
-		animation_player.play("attack")
+func update_health_bar() -> void:
+	health_bar.value = (current_health / max_health) * 100
 
-func play_hit_animation():
-	if animation_player and animation_player.has_animation("hit"):
-		animation_player.play("hit")
+func set_team(new_team: String) -> void:
+	team = new_team
+	modulate = Color.RED if team == "enemy" else Color.BLUE
+	await find_enemy_base()
 
-func play_death_animation():
-	if animation_player and animation_player.has_animation("death"):
-		animation_player.play("death")
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	if body == self:
+		return
+		
+	# Check for both GameBase and GameBased types
+	var is_base = body is GameBase or body is GameBased
+	
+	# Prioritize attacking enemy units over the base
+	if body.has_method("set_team") and body.team != team:
+		target = body
+		current_state = UnitState.MOVING
+	# Only target base if no enemy units are in range
+	elif is_base and body.team != team and not target:
+		target = body
+		current_state = UnitState.MOVING
 
-func _on_attack_timer_timeout():
-	can_attack = true
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	if body == target:
+		target = null
+		# Check if there are other enemies nearby
+		check_for_enemies()
+
+func _on_attack_area_body_entered(body: Node2D) -> void:
+	if body == target:
+		current_state = UnitState.ATTACKING
+	# If current target is base but we detect an enemy unit, switch target
+	elif body.has_method("set_team") and body.team != team and target == enemy_base:
+		target = body
+		current_state = UnitState.ATTACKING
+
+func _on_attack_area_body_exited(body: Node2D) -> void:
+	if body == target:
+		current_state = UnitState.MOVING
+		check_for_enemies()

@@ -30,8 +30,9 @@ func take_damage(damage: float):
 		health_bar.value = health
 	
 	if health <= 0:
-		on_base_destroyed()
-
+		#on_base_destroyed()
+		pass
+		
 func on_base_destroyed():
 	# Implement game over logic here
 	var game_manager = get_tree().get_first_node_in_group("game_manager")

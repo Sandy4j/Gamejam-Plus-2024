@@ -5,7 +5,7 @@ class_name GameBased
 signal enem_set
 
 @onready var health_bar = $HealthBar if has_node("HealthBar") else null
-@export var team: String = "player"
+var team: String = "enemy"
 @export var max_health: float = 1000.0
 
 var health: float

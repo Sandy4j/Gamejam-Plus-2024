@@ -15,7 +15,6 @@ var unit_scenes = {
 	"warrior": preload("res://Actor/Warrior.tscn"),
 	"archer": preload("res://Actor/Archer.tscn")
 }
-
 var spawn_point: Marker2D
 
 func _init(initial_gold: int = 100):

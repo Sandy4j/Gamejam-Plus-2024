@@ -1,15 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://w2tfvl6rq2js"]
+[gd_scene load_steps=6 format=3 uid="uid://w2tfvl6rq2js"]
 
 [ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_h52ab"]
 [ext_resource type="Script" path="res://Script/archer.gd" id="1_sd18r"]
-
-[sub_resource type="Animation" id="Animation_gmkas"]
-resource_name = "Walk"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ns20"]
-_data = {
-"Walk": SubResource("Animation_gmkas")
-}
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b7461"]
 radius = 58.4637
@@ -17,20 +9,17 @@ radius = 58.4637
 [sub_resource type="CircleShape2D" id="CircleShape2D_p11hq"]
 radius = 250.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_i6ns8"]
+radius = 50.0
+
 [node name="Archer" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
-collision_layer = 2
-collision_mask = 3
+collision_mask = 7
 script = ExtResource("1_sd18r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0, 1)
 texture = ExtResource("1_h52ab")
-
-[node name="PlayerAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_4ns20")
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_b7461")
@@ -53,7 +42,9 @@ scale = Vector2(2, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_p11hq")
 
-[node name="AttackRayCast" type="RayCast2D" parent="."]
+[node name="AttackArea" type="Area2D" parent="."]
 scale = Vector2(2, 2)
-target_position = Vector2(0, 0)
 collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_i6ns8")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=4 uid="uid://c7g0ittcl63fh"]
+[gd_scene load_steps=11 format=4 uid="uid://c7g0ittcl63fh"]
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_0x5yr"]
 [ext_resource type="TileSet" uid="uid://byuc80ldil4av" path="res://Tilest.tres" id="2_mpfr3"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="3_4x4ji"]
 [ext_resource type="Script" path="res://enemy_commander.gd" id="3_83djf"]
 [ext_resource type="Script" path="res://player_manager.gd" id="3_ojgvj"]
 [ext_resource type="PackedScene" uid="uid://dxad1os81npv3" path="res://Environment/base_enemy.tscn" id="4_ekjqu"]
@@ -61,6 +62,7 @@ autostart = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
+script = ExtResource("3_4x4ji")
 
 [node name="Tilemap" type="TileMap" parent="."]
 tile_set = ExtResource("2_mpfr3")
@@ -78,12 +80,11 @@ tile_set = ExtResource("2_mpfr3")
 script = ExtResource("3_83djf")
 
 [node name="SpawnAI" type="Marker2D" parent="EnemyCommander"]
-position = Vector2(994, 351)
+position = Vector2(960, 339)
 
 [node name="BaseEnemy" parent="EnemyCommander" instance=ExtResource("4_ekjqu")]
-position = Vector2(1081, 345)
+position = Vector2(1039, 346)
 script = ExtResource("6_kub0h")
-team = "player"
 
 [node name="Wave_Timer" type="Timer" parent="EnemyCommander"]
 wait_time = 90.0
@@ -93,9 +94,10 @@ position = Vector2(50, 460)
 script = ExtResource("3_ojgvj")
 
 [node name="SpawnP" type="Marker2D" parent="PlayerManager"]
-position = Vector2(51, -111)
+position = Vector2(109, -120)
 
 [node name="BasePlayer" parent="PlayerManager" instance=ExtResource("6_k4cok")]
+position = Vector2(49, -120)
 
 [connection signal="text_submitted" from="CanvasLayer/Control/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="timeout" from="Gold_Timer" to="." method="_on_gold_timer_timeout"]

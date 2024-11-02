@@ -1,17 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://baddi56q8hqw4"]
+[gd_scene load_steps=6 format=3 uid="uid://baddi56q8hqw4"]
 
 [ext_resource type="Script" path="res://Script/warrior.gd" id="1_h7orq"]
 [ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_s5nls"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h6ejh"]
-radius = 58.4637
+radius = 75.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c6ibm"]
 radius = 100.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_evf1g"]
+radius = 60.0
+
 [node name="Warrior" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
-collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_h7orq")
 
@@ -28,6 +30,13 @@ scale = Vector2(2, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_c6ibm")
 
+[node name="AttackArea" type="Area2D" parent="."]
+scale = Vector2(2, 2)
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_evf1g")
+
 [node name="AttackTimer" type="Timer" parent="."]
 
 [node name="HealthBar" type="ProgressBar" parent="."]
@@ -35,8 +44,3 @@ offset_left = -50.0
 offset_top = -130.0
 offset_right = 50.0
 offset_bottom = -80.0
-
-[node name="AttackRayCast" type="RayCast2D" parent="."]
-scale = Vector2(2, 2)
-target_position = Vector2(0, 0)
-collision_mask = 3

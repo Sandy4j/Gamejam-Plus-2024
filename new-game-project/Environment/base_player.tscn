@@ -9,6 +9,7 @@ size = Vector2(118, 117)
 [node name="BasePlayer" type="StaticBody2D"]
 position = Vector2(-20, -113)
 scale = Vector2(0.5, 0.5)
+collision_mask = 7
 script = ExtResource("1_y5aaw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

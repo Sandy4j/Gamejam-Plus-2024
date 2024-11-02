@@ -7,6 +7,8 @@
 radius = 14.0
 
 [node name="Proyektil" type="Area2D"]
+collision_layer = 5
+collision_mask = 3
 script = ExtResource("1_185jn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -17,3 +19,6 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_mhuvr")
 
 [node name="LifetimeTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
