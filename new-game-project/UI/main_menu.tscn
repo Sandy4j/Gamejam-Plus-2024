@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://urjdpr8m7chs"]
+[gd_scene load_steps=10 format=3 uid="uid://urjdpr8m7chs"]
 
 [ext_resource type="Script" path="res://UI/main_menu.gd" id="1_uueal"]
 [ext_resource type="Texture2D" uid="uid://bvs7muf2hqxtt" path="res://UI/Play_Idle.png" id="2_mdfp6"]
@@ -6,6 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://hkp48qwgxymy" path="res://UI/Play_Hover.png" id="4_b1i8k"]
 [ext_resource type="Texture2D" uid="uid://80i2epli4r5g" path="res://UI/Exit.png" id="5_w0qup"]
 [ext_resource type="Texture2D" uid="uid://c1j32e8aciy8t" path="res://UI/Exit_bg.png" id="6_vbq0a"]
+[ext_resource type="Texture2D" uid="uid://du8utcg4moot7" path="res://UI/Group 3.png" id="7_wt4et"]
+
+[sub_resource type="Animation" id="Animation_ae6pr"]
+resource_name = "Start"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bqal6"]
+_data = {
+"Start": SubResource("Animation_ae6pr")
+}
 
 [node name="Mainmenu" type="Control"]
 layout_mode = 3
@@ -69,9 +78,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -200.0
+offset_left = -180.0
 offset_top = -63.0
-offset_right = -104.0
+offset_right = -84.0
 offset_bottom = -23.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -84,15 +93,33 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -304.0
+offset_left = -307.0
 offset_top = -74.0
-offset_right = -208.0
+offset_right = -211.0
 offset_bottom = -14.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("6_vbq0a")
 
+[node name="credit" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1093.0
+offset_top = -74.0
+offset_right = -554.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("7_wt4et")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bqal6")
+}
 
 [connection signal="pressed" from="Bg/Play_Btn" to="." method="_on_play_btn_pressed"]
 [connection signal="pressed" from="Bg/Quit_Btn" to="." method="_on_quit_btn_pressed"]
