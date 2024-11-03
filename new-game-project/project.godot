@@ -16,6 +16,10 @@ run/main_scene="res://UI/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Dvd="*res://Music/DVD.tscn"
+
 [input]
 
 left={

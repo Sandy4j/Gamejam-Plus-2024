@@ -69,7 +69,7 @@ func move(delta: float) -> void:
 	if target and is_instance_valid(target):
 		var direction = (target.global_position - global_position).normalized()
 		velocity = direction * move_speed
-		sprite.flip_h = direction.x < 0
+		#sprite.flip_h = direction.x < 0
 		move_and_slide()
 
 func check_for_enemies() -> void:
@@ -134,7 +134,7 @@ func update_health_bar() -> void:
 
 func set_team(new_team: String) -> void:
 	team = new_team
-	modulate = Color.RED if team == "enemy" else Color.BLUE
+	#modulate = Color.RED if team == "enemy" else Color.BLUE
 	await find_enemy_base()
 
 func _on_detection_area_body_entered(body: Node2D) -> void:

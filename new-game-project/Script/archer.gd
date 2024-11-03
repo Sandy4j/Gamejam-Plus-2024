@@ -38,7 +38,6 @@ func move(delta: float) -> void:
 			# Maju jika terlalu jauh dari target
 			var direction = (target.global_position - global_position).normalized()
 			velocity = direction * move_speed
-		sprite.flip_h = velocity.x < 0
 		move_and_slide()
 	else:
 		super.move(delta)

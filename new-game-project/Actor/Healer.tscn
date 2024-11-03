@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bivbtkubgq8ik"]
+[gd_scene load_steps=11 format=3 uid="uid://bivbtkubgq8ik"]
 
-[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_pydix"]
 [ext_resource type="Script" path="res://Script/healer.gd" id="1_uyb38"]
+[ext_resource type="Texture2D" uid="uid://b0drucxbwg4xg" path="res://Asset/Sprites/Karakter sma/Support/support full.png" id="2_44g8j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jpilh"]
 radius = 66.1211
@@ -9,12 +9,103 @@ radius = 66.1211
 [sub_resource type="CircleShape2D" id="CircleShape2D_q6to4"]
 radius = 400.0
 
+[sub_resource type="Animation" id="Animation_u087a"]
+resource_name = "Attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.166667, 0.233333, 0.3, 0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7, 0.766667, 0.833333, 0.933333, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+}
+
+[sub_resource type="Animation" id="Animation_opedy"]
+resource_name = "Death"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.366667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25]
+}
+
+[sub_resource type="Animation" id="Animation_6u80i"]
+resource_name = "Hitted"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [26, 27, 28]
+}
+
+[sub_resource type="Animation" id="Animation_bk3eb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_y5bs7"]
+resource_name = "Walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gpppf"]
+_data = {
+"Attack": SubResource("Animation_u087a"),
+"Death": SubResource("Animation_opedy"),
+"Hitted": SubResource("Animation_6u80i"),
+"RESET": SubResource("Animation_bk3eb"),
+"Walk": SubResource("Animation_y5bs7")
+}
+
 [node name="Healer" type="CharacterBody2D"]
 scale = Vector2(0.5, 0.5)
 script = ExtResource("1_uyb38")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_pydix")
+scale = Vector2(4.075, 4.075)
+texture = ExtResource("2_44g8j")
+hframes = 6
+vframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_jpilh")
@@ -30,3 +121,8 @@ offset_left = -50.0
 offset_top = -130.0
 offset_right = 50.0
 offset_bottom = -80.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gpppf")
+}

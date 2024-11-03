@@ -1,23 +1,25 @@
-[gd_scene load_steps=25 format=4 uid="uid://c7g0ittcl63fh"]
+[gd_scene load_steps=29 format=4 uid="uid://c7g0ittcl63fh"]
 
 [ext_resource type="Script" path="res://GameManager.gd" id="1_0x5yr"]
 [ext_resource type="Script" path="res://camera_2d.gd" id="3_4x4ji"]
 [ext_resource type="Script" path="res://enemy_commander.gd" id="3_83djf"]
-[ext_resource type="PackedScene" uid="uid://bcq470jj8xney" path="res://UI/keywords.tscn" id="3_nhsnm"]
+[ext_resource type="PackedScene" path="res://UI/keywords.tscn" id="3_nhsnm"]
 [ext_resource type="Script" path="res://player_manager.gd" id="3_ojgvj"]
 [ext_resource type="PackedScene" uid="uid://dxad1os81npv3" path="res://Environment/base_enemy.tscn" id="4_ekjqu"]
+[ext_resource type="Texture2D" uid="uid://crixitakxx2gn" path="res://UI/Ruwet/GJ-TYPING BLUE.png" id="4_g1pv5"]
+[ext_resource type="FontFile" uid="uid://betgft1vx2c45" path="res://UI/PixelifySans-VariableFont_wght.ttf" id="5_t6pua"]
 [ext_resource type="Texture2D" uid="uid://e4c78qak4th6" path="res://Asset/Tilesets/Tile set.png" id="5_xt21u"]
+[ext_resource type="Texture2D" uid="uid://ifful07gtjdc" path="res://UI/Ruwet/GJ-BOK YELL - MINI.png" id="6_3svht"]
 [ext_resource type="Texture2D" uid="uid://b07o60pm2wr53" path="res://Asset/Tilesets/Rumah Background/Rumah 1.png" id="6_43cf7"]
 [ext_resource type="PackedScene" uid="uid://unepcw1mo3pt" path="res://Environment/base_player.tscn" id="6_k4cok"]
 [ext_resource type="Script" path="res://Script/base_enemy.gd" id="6_kub0h"]
 [ext_resource type="PackedScene" uid="uid://q5jdk17ue8e2" path="res://UI/Ui.tscn" id="7_e2f0j"]
 [ext_resource type="Texture2D" uid="uid://buhyprrc1bxic" path="res://Asset/Tilesets/Rumah Background/Rumah 2.png" id="7_ry04q"]
+[ext_resource type="Texture2D" uid="uid://c328564g8h76r" path="res://UI/Ruwet/GJ-CHICKEN GLD.png" id="7_xsrpd"]
+[ext_resource type="Texture2D" uid="uid://l56588f0yl75" path="res://UI/Ruwet/GJ-SCORE YELL-MINI.png" id="8_8622b"]
 [ext_resource type="Texture2D" uid="uid://clpiphfrwge73" path="res://Asset/Tilesets/Rumah Background/Rumah 3.png" id="8_syid0"]
 [ext_resource type="Texture2D" uid="uid://c8ccr3nfl33s1" path="res://Asset/Tilesets/Props Aset/Sekolah/Sekolah.png" id="9_3irso"]
 [ext_resource type="Texture2D" uid="uid://cs3oc5la86kt2" path="res://Asset/Tilesets/Props Aset/Rumah Kosong (enemys spawn)/Rumah Kosong1.png" id="10_mc8l8"]
-
-[sub_resource type="SystemFont" id="SystemFont_1f4eu"]
-subpixel_positioning = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3rk0r"]
 size = Vector2(1916, 641)
@@ -324,42 +326,76 @@ visible = false
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 500.0
-offset_right = 250.0
-offset_bottom = 531.0
+[node name="B" type="NinePatchRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/B"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 39.0
+offset_top = -94.9999
+offset_right = 1508.0
+offset_bottom = 173.0
+grow_vertical = 0
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("4_g1pv5")
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Control/B"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 53.0
+offset_top = -86.0
+offset_right = 289.0
+offset_bottom = -55.0
+grow_vertical = 0
 theme_override_colors/font_color = Color(0, 1, 0, 1)
-theme_override_fonts/font = SubResource("SystemFont_1f4eu")
+theme_override_fonts/font = ExtResource("5_t6pua")
 
-[node name="gold_label" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 460.0
-offset_right = 133.0
-offset_bottom = 483.0
+[node name="Egold_label" type="Label" parent="CanvasLayer/Control/B"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -11.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="Egold_label" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 1019.0
-offset_top = 472.0
-offset_right = 1102.0
-offset_bottom = 495.0
-
-[node name="notification_label" type="Label" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_left = 289.0
-offset_top = 450.0
-offset_right = 480.0
-offset_bottom = 488.0
+[node name="notification_label" type="Label" parent="CanvasLayer/Control/B"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -94.0
+offset_top = 106.0
+offset_right = 97.0
+offset_bottom = 144.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_t6pua")
+theme_override_font_sizes/font_size = 30
+text = "
+"
 
-[node name="CommandContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+[node name="CommandContainer" type="VBoxContainer" parent="CanvasLayer/Control/B"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -367,6 +403,64 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.37539, 0.806242)
+
+[node name="Box" type="TextureRect" parent="CanvasLayer/Control/B"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 120.0
+offset_right = 382.0
+offset_bottom = 455.0
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_3svht")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/B/Box"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -137.5
+offset_right = -98.0
+offset_bottom = -96.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(7, 7)
+texture = ExtResource("7_xsrpd")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/B/Box"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.0
+offset_top = 184.5
+offset_right = 202.0
+offset_bottom = 386.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_8622b")
+
+[node name="gold_label" type="Label" parent="CanvasLayer/Control/B/Box"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.5
+offset_top = 245.0
+offset_right = 78.5
+offset_bottom = 305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "
+"
 
 [node name="Gold_Timer" type="Timer" parent="."]
 autostart = true
@@ -421,7 +515,7 @@ position = Vector2(248, -120)
 position = Vector2(92, -143)
 scale = Vector2(2, 2)
 
-[connection signal="text_submitted" from="CanvasLayer/Control/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="text_submitted" from="CanvasLayer/Control/B/LineEdit" to="." method="_on_line_edit_text_submitted"]
 [connection signal="timeout" from="Gold_Timer" to="." method="_on_gold_timer_timeout"]
 [connection signal="enem_set" from="EnemyCommander/BaseEnemy" to="CanvasLayer/IU" method="_on_base_enemy_enem_set"]
 [connection signal="timeout" from="EnemyCommander/Wave_Timer" to="EnemyCommander" method="_on_wave_timer_timeout"]

@@ -1,10 +1,48 @@
-[gd_scene load_steps=4 format=3 uid="uid://q5t0nui4gl3x"]
+[gd_scene load_steps=7 format=3 uid="uid://q5t0nui4gl3x"]
 
 [ext_resource type="Script" path="res://Script/proyektil.gd" id="1_185jn"]
-[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_mhuvr"]
+[ext_resource type="Texture2D" uid="uid://bf5384hmgcjkp" path="res://Asset/Sprites/Karakter sma/Ranged/ranged full rev (2).png" id="2_8oc50"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m2312"]
 radius = 14.0
+
+[sub_resource type="Animation" id="Animation_2bdcp"]
+resource_name = "Anim"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [28, 29, 30, 31]
+}
+
+[sub_resource type="Animation" id="Animation_q5n0g"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [28]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_guqg4"]
+_data = {
+"Anim": SubResource("Animation_2bdcp"),
+"RESET": SubResource("Animation_q5n0g")
+}
 
 [node name="Proyektil" type="Area2D"]
 collision_layer = 5
@@ -16,9 +54,17 @@ shape = SubResource("CircleShape2D_m2312")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_mhuvr")
+texture = ExtResource("2_8oc50")
+hframes = 7
+vframes = 5
+frame = 28
 
 [node name="LifetimeTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_guqg4")
+}
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

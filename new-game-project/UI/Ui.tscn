@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://q5jdk17ue8e2"]
+[gd_scene load_steps=11 format=3 uid="uid://q5jdk17ue8e2"]
 
 [ext_resource type="Script" path="res://UI/UI.gd" id="1_e7ewg"]
+[ext_resource type="Texture2D" uid="uid://dw3svj3o17dd" path="res://UI/Ruwet/GJ-PROGRESSBAR BG.png" id="2_hpl0g"]
 [ext_resource type="Texture2D" uid="uid://db3de1l5je3lw" path="res://UI/ContohButt.png" id="2_rlfre"]
+[ext_resource type="Texture2D" uid="uid://d28jgixoridnx" path="res://UI/Ruwet/GJ-BOX 1 BLUE.png" id="4_kt4iq"]
+[ext_resource type="Texture2D" uid="uid://ck2pcd4f6htjn" path="res://UI/Ruwet/GJ-BOX 2 BLUE.png" id="5_j8g8s"]
+[ext_resource type="Texture2D" uid="uid://bpb6kobwhewwx" path="res://UI/Ruwet/GJ-BOX 1 GREY.png" id="5_te151"]
+[ext_resource type="FontFile" uid="uid://betgft1vx2c45" path="res://UI/PixelifySans-VariableFont_wght.ttf" id="6_mfdwy"]
+[ext_resource type="Texture2D" uid="uid://snttvij8layg" path="res://UI/Ruwet/mukul 6.png" id="7_x8t4f"]
+[ext_resource type="Texture2D" uid="uid://dyag0yxivs5ie" path="res://UI/Ruwet/ngeheal 7.png" id="9_k5gdd"]
+[ext_resource type="Texture2D" uid="uid://cem8sigbm4wol" path="res://UI/Ruwet/Ranged.png" id="10_84r2s"]
 
 [node name="IU" type="Control"]
 layout_direction = 1
@@ -23,30 +31,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="TextureRect" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -511.0
+offset_top = 23.0
+offset_right = 7357.0
+offset_bottom = 492.0
+grow_horizontal = 2
+scale = Vector2(0.13, 0.13)
+texture = ExtResource("2_hpl0g")
+
 [node name="Player_HP" type="ProgressBar" parent="Bg"]
 layout_mode = 1
-offset_left = 60.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -516.0
 offset_top = 40.0
-offset_right = 460.0
+offset_right = -23.0
 offset_bottom = 67.0
+grow_horizontal = 2
 max_value = 1000.0
 value = 20.0
 fill_mode = 1
 
 [node name="Enemy_HP" type="ProgressBar" parent="Bg"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -460.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 25.0
 offset_top = 40.0
-offset_right = -60.0
+offset_right = 516.0
 offset_bottom = 67.0
-grow_horizontal = 0
+grow_horizontal = 2
 max_value = 1000.0
-value = 40.0
 
 [node name="Bg_Wave" type="ColorRect" parent="Bg"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -112,3 +137,351 @@ texture_normal = ExtResource("2_rlfre")
 [node name="Sup_Btn" type="TextureButton" parent="Bg/But_Con"]
 layout_mode = 2
 texture_normal = ExtResource("2_rlfre")
+
+[node name="bg" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.0
+offset_top = -217.0
+offset_right = 207.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_kt4iq")
+
+[node name="TextureRect2" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.0
+offset_top = -68.8
+offset_right = 207.0
+offset_bottom = 65.2
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Label" type="Label" parent="Bg/TextureRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -137.5
+offset_top = -42.5
+offset_right = 137.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "Warrior"
+
+[node name="Tg1" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.0
+offset_top = -259.8
+offset_right = 207.0
+offset_bottom = -125.8
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Random_War" type="Label" parent="Bg/Tg1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -137.5
+offset_top = -42.5
+offset_right = 137.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "rand"
+
+[node name="mg" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -246.0
+offset_top = -217.0
+offset_right = 222.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_x8t4f")
+
+[node name="fg" type="TextureRect" parent="Bg"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -261.0
+offset_top = -217.0
+offset_right = 207.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_te151")
+
+[node name="bg2" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -217.0
+offset_right = 364.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_kt4iq")
+
+[node name="TextureRect3" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -68.8
+offset_right = 362.0
+offset_bottom = 65.2
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Label2" type="Label" parent="Bg/TextureRect3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -42.5
+offset_right = 121.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "Archer"
+
+[node name="tg2" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -106.0
+offset_top = -259.8
+offset_right = 362.0
+offset_bottom = -125.8
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Random_Arc" type="Label" parent="Bg/tg2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -42.5
+offset_right = 121.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "Archer"
+
+[node name="mg2" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -212.0
+offset_right = 338.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("9_k5gdd")
+
+[node name="fg2" type="TextureRect" parent="Bg"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -217.0
+offset_right = 364.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_te151")
+
+[node name="bg3" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 49.0
+offset_top = -217.0
+offset_right = 517.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_kt4iq")
+
+[node name="TextureRect4" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 49.0
+offset_top = -68.8
+offset_right = 517.0
+offset_bottom = 65.2
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Label2" type="Label" parent="Bg/TextureRect4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.5
+offset_top = -42.5
+offset_right = 146.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "Support"
+
+[node name="tg3" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 49.0
+offset_top = -259.8
+offset_right = 517.0
+offset_bottom = -125.8
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_j8g8s")
+
+[node name="Random_Sup" type="Label" parent="Bg/tg3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.5
+offset_top = -42.5
+offset_right = 146.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_fonts/font = ExtResource("6_mfdwy")
+theme_override_font_sizes/font_size = 70
+text = "Support"
+
+[node name="mg3" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 21.0
+offset_top = -217.0
+offset_right = 489.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("10_84r2s")
+
+[node name="fg3" type="TextureRect" parent="Bg"]
+modulate = Color(1, 1, 1, 0.588235)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 49.0
+offset_top = -217.0
+offset_right = 517.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_te151")

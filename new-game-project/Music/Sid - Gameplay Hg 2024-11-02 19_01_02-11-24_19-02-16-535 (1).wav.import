@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dnqbpvkef8lgf"
+path="res://.godot/imported/Sid - Gameplay Hg 2024-11-02 19_01_02-11-24_19-02-16-535 (1).wav-83bef0cdd1e8df5b4b28a3208a7bcd66.sample"
+
+[deps]
+
+source_file="res://Music/Sid - Gameplay Hg 2024-11-02 19_01_02-11-24_19-02-16-535 (1).wav"
+dest_files=["res://.godot/imported/Sid - Gameplay Hg 2024-11-02 19_01_02-11-24_19-02-16-535 (1).wav-83bef0cdd1e8df5b4b28a3208a7bcd66.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
