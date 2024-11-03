@@ -4,6 +4,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Dvd.play_bgm(0)
+	$AnimationPlayer.play("Start")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -21,4 +22,7 @@ func _on_quit_btn_pressed() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
-		get_tree().quit()
+		if $AnimationPlayer.is_playing():
+			$AnimationPlayer.play("RESET")
+		else:
+			get_tree().quit()

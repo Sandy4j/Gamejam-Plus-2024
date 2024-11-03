@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://dks4fd1583sp2"]
 
+[ext_resource type="Script" path="res://UI/win_scene.gd" id="1_afe1l"]
 [ext_resource type="Texture2D" uid="uid://b0130ourybn1a" path="res://UI/WIN - TX.png" id="1_rvgo4"]
 [ext_resource type="Texture2D" uid="uid://80i2epli4r5g" path="res://UI/Exit.png" id="2_dkirm"]
 [ext_resource type="Texture2D" uid="uid://c1j32e8aciy8t" path="res://UI/Exit_bg.png" id="3_rihum"]
 [ext_resource type="Texture2D" uid="uid://d21vstk52awuv" path="res://UI/GJ-CREDIT.png" id="4_w1lrw"]
 [ext_resource type="Texture2D" uid="uid://du8utcg4moot7" path="res://UI/Group 3.png" id="5_ixr5v"]
-[ext_resource type="Texture2D" uid="uid://dso843lmppp0" path="res://UI/GAME OVER - TX.png" id="6_2fckd"]
 
 [sub_resource type="Animation" id="Animation_f6exh"]
 resource_name = "ANim"
@@ -62,22 +62,10 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(482, 219)]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Gameover:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(291, 244)]
-}
 
 [sub_resource type="Animation" id="Animation_x5a7x"]
 resource_name = "credit"
-length = 5.0
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -85,10 +73,10 @@ tracks/0/path = NodePath("Credit-pop:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 4, 4.5, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.2, 2.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(0.01, 0.01), Vector2(0.2, 0.2), Vector2(0.6, 0.6), Vector2(0.6, 0.6), Vector2(0.2, 0.2), Vector2(0.01, 0.01)]
+"values": [Vector2(0.01, 0.01), Vector2(0.2, 0.2), Vector2(0.6, 0.6), Vector2(0.6, 0.6)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -97,28 +85,16 @@ tracks/1/path = NodePath("Credit-pop:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 4, 4.5, 5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 1.2, 2.4, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(571, 322), Vector2(497, 246), Vector2(335, 88), Vector2(335, 88), Vector2(497, 246), Vector2(571, 322)]
+"values": [Vector2(571, 322), Vector2(497, 246), Vector2(335, 88), Vector2(335, 88)]
 }
 
 [sub_resource type="Animation" id="Animation_emd4g"]
 resource_name = "game_over"
 length = 2.0
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Gameover:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(270, 240), Vector2(270, 230), Vector2(270, 230), Vector2(270, 240), Vector2(270, 250)]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0xnka"]
 _data = {
@@ -135,8 +111,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_afe1l")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -145,7 +123,6 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Youwin" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -153,16 +130,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -296.0
-offset_top = -84.0
+offset_top = -75.1029
 offset_right = 664.0
-offset_bottom = 188.0
+offset_bottom = 196.897
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("1_rvgo4")
 
 [node name="Credit-pop" type="TextureRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -177,23 +153,6 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("4_w1lrw")
-
-[node name="Gameover" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -306.0
-offset_top = -84.0
-offset_right = 5028.0
-offset_bottom = 1017.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.11, 0.11)
-texture = ExtResource("6_2fckd")
 
 [node name="botBg" type="ColorRect" parent="."]
 layout_mode = 1
