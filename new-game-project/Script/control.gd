@@ -1,45 +1,52 @@
 extends Control
+class_name KeywordsDisplay
 
-@onready var command_container = $CommandContainer
-var player_manager: PlayerManager
+# Reference ke label-label yang akan menampilkan keywords
+var unit_labels = {}
 
 func _ready():
-	set_player_manager()
-
-func set_player_manager():
-	if player_manager:
-		player_manager.spawn_keywords_updated.connect(_on_keywords_updated)
-		_update_command_list(player_manager.get_spawn_commands())
-		print("berhasuk")
-	else:
-		print("PlayerManager not found!")
-
-func _on_keywords_updated(keywords: Dictionary):
-	if player_manager:
-		_update_command_list(player_manager.get_spawn_commands())
-
-func _update_command_list(commands: Array):
-	# Clear existing children
-	for child in command_container.get_children():
-		child.queue_free()
+	# Setup basic UI container
+	var container = VBoxContainer.new()
+	container.custom_minimum_size = Vector2(200, 0)
+	add_child(container)
 	
-	# Add command information for each unit
-	for command in commands:
-		var label = Label.new()
-		# Style the label
-		label.add_theme_color_override("font_color", Color.WHITE)
-		label.add_theme_font_size_override("font_size", 16)
+	# Tambahkan title
+	var title = Label.new()
+	title.text = "Unit Keywords"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	container.add_child(title)
+	
+	# Setup label untuk setiap unit
+	var units = ["warrior", "archer", "healer"]
+	for unit in units:
+		var unit_container = HBoxContainer.new()
+		container.add_child(unit_container)
 		
-		# Add padding
-		var padding = 5
-		label.set("custom_minimum_size", Vector2(0, 30))
-		label.set("theme_override_constants/margin_left", padding)
-		label.set("theme_override_constants/margin_right", padding)
+		# Label untuk nama unit
+		var name_label = Label.new()
+		name_label.text = unit.capitalize() + ":"
+		name_label.custom_minimum_size = Vector2(80, 0)
+		unit_container.add_child(name_label)
 		
-		label.text = "%s: ketik '%s %s' (Cost: %d gold)" % [
-			command.unit.capitalize(),
-			command.unit,
-			command.keyword,
-			command.cost
-		]
-		command_container.add_child(label)
+		# Label untuk keyword
+		var keyword_label = Label.new()
+		keyword_label.text = "..."
+		unit_container.add_child(keyword_label)
+		
+		# Simpan reference ke label keyword
+		unit_labels[unit] = keyword_label
+
+# Fungsi untuk update keyword specific unit
+func update_keyword(unit_name: String, new_word: String):
+	if unit_labels.has(unit_name):
+		unit_labels[unit_name].text = new_word
+
+# Fungsi untuk setup koneksi dengan PlayerManager
+func connect_to_player_manager(player_manager: PlayerManager):
+	# Koneksikan signal verification_word_changed
+	player_manager.verification_word_changed.connect(update_keyword)
+	
+	# Update semua keywords yang ada
+	for unit in unit_labels.keys():
+		var current_word = player_manager.get_current_verification_word(unit)
+		update_keyword(unit, current_word)

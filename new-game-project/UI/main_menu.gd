@@ -9,6 +9,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+func _unhandled_input(event):
+	if Input.is_action_just_pressed("enter"):
+		_on_play_btn_pressed()
+	
 func _on_play_btn_pressed() -> void:
 	get_tree().change_scene_to_file("res://UI/loading.tscn")
 

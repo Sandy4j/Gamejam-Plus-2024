@@ -7,9 +7,15 @@ extends Node2D
 @onready var player_base = $PlayerManager/BasePlayer
 @onready var enemy_base = $EnemyCommander/BaseEnemy
 @onready var UI = $CanvasLayer/IU
+#@onready var keywords_display = $CanvasLayer/Control
 
 var player_commander: PlayerManager
 var enemy_commander: EnemyCommanderManager
+
+func _unhandled_input(event):
+	if event.is_pressed() and event.is_action_pressed("enter"):
+			command_input.grab_focus()
+			get_viewport().set_input_as_handled()
 
 func _ready():
 	add_to_group("game_manager")
@@ -19,7 +25,9 @@ func _ready():
 	enemy_commander = EnemyCommanderManager.new()
 	enemy_commander.set_spawn_point($EnemyCommander/SpawnAI)
 	add_child(enemy_commander)
-
+	
+	#keywords_display.connect_to_player_manager(player_commander)
+	
 	player_commander.gold_updated.connect(_on_player_gold_updated)
 	player_commander.notification_sent.connect(show_notification)
 	enemy_commander.gold_updated.connect(_on_enemy_gold_updated)

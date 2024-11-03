@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxad1os81npv3"]
 
 [ext_resource type="Script" path="res://Script/base_player.gd" id="1_q28ob"]
-[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="2_skxmb"]
+[ext_resource type="Texture2D" uid="uid://cs3oc5la86kt2" path="res://Asset/Tilesets/Props Aset/Rumah Kosong (enemys spawn)/Rumah Kosong1.png" id="2_ggvdy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_es5cn"]
 size = Vector2(118, 117)
@@ -14,11 +14,12 @@ script = ExtResource("1_q28ob")
 team = "enemy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_es5cn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_skxmb")
+texture = ExtResource("2_ggvdy")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -50.0

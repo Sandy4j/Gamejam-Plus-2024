@@ -4,7 +4,6 @@ class_name GameBase
 
 signal player_set 
 
-@onready var health_bar = $HealthBar if has_node("HealthBar") else null
 @export var team: String = "player"
 @export var max_health: float = 1000.0
 
@@ -13,9 +12,7 @@ var health: float
 func _ready():
 	health = max_health
 	emit_signal("player_set", health)
-	if health_bar:
-		health_bar.max_value = max_health
-		health_bar.value = health
+	
 	
 	# Add to appropriate group
 	if team == "player":
@@ -26,9 +23,6 @@ func _ready():
 func take_damage(damage: float):
 	health -= damage
 	emit_signal("player_set", health)
-	if health_bar:
-		health_bar.value = health
-	
 	if health <= 0:
 		#on_base_destroyed()
 		pass
