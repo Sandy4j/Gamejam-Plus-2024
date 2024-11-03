@@ -12,19 +12,21 @@ var max_spawn_delay: float = 7.0  # Maksimal delay antar spawn
 
 var unit_costs = {
 	"warrior": 10,
-	"archer": 15
+	"archer": 15,
+	"healer": 50  # Tambahkan biaya untuk unit healer
 }
 
 var unit_scenes = {
 	"warrior": preload("res://AI/Warrior B.tscn"),
-	"archer": preload("res://AI/ArcherB.tscn")
+	"archer": preload("res://AI/ArcherB.tscn"),
+	"healer": preload("res://AI/healerb.tscn")  # Tambahkan preload untuk unit healer
 }
 
 # Strategi spawn unit
 var spawn_strategies = {
-	"balanced": {"warrior": 0.5, "archer": 0.5},  # 50-50 chance
-	"aggressive": {"warrior": 0.7, "archer": 0.3},  # Lebih banyak warrior
-	"defensive": {"warrior": 0.3, "archer": 0.7}   # Lebih banyak archer
+	"balanced": {"warrior": 0.4, "archer": 0.4, "healer": 0.2},  # 40-40-20 chance
+	"aggressive": {"warrior": 0.6, "archer": 0.3, "healer": 0.1},  # Lebih banyak warrior
+	"defensive": {"warrior": 0.3, "archer": 0.4, "healer": 0.3}   # Lebih banyak archer dan healer
 }
 
 var current_strategy: String = "balanced"

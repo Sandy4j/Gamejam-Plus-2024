@@ -10,8 +10,6 @@ func _ready():
 	set_collision_mask_value(1, true)   # Mask untuk unit
 	set_collision_mask_value(2, true)   # Mask untuk base
 	
-	# Connect signal
-	body_entered.connect(_on_body_entered)
 	
 	# Setup collision shape if not already present
 	if get_child_count() == 0:

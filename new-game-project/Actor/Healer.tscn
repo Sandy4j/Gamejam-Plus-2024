@@ -1,23 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://bivbtkubgq8ik"]
+[gd_scene load_steps=5 format=3 uid="uid://bivbtkubgq8ik"]
 
-[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_y2lpm"]
+[ext_resource type="Texture2D" uid="uid://btbwgydbxnjdy" path="res://icon.svg" id="1_pydix"]
+[ext_resource type="Script" path="res://Script/healer.gd" id="1_uyb38"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_12lme"]
-radius = 58.4637
+[sub_resource type="CircleShape2D" id="CircleShape2D_jpilh"]
+radius = 66.1211
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_xgtkl"]
-radius = 200.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6to4"]
+radius = 400.0
 
 [node name="Healer" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_uyb38")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_y2lpm")
+texture = ExtResource("1_pydix")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_12lme")
+shape = SubResource("CircleShape2D_jpilh")
 
 [node name="DetectionArea" type="Area2D" parent="."]
-scale = Vector2(2, 2)
+position = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-shape = SubResource("CircleShape2D_xgtkl")
+shape = SubResource("CircleShape2D_q6to4")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -50.0
+offset_top = -130.0
+offset_right = 50.0
+offset_bottom = -80.0

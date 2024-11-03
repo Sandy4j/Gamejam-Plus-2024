@@ -6,7 +6,7 @@ extends Node2D
 @onready var Egold_label: Label = $CanvasLayer/Control/Egold_label
 @onready var player_base = $PlayerManager/BasePlayer
 @onready var enemy_base = $EnemyCommander/BaseEnemy
-@onready var UI = $CanvasLayer/UI
+@onready var UI = $CanvasLayer/IU
 
 var player_commander: PlayerManager
 var enemy_commander: EnemyCommanderManager
@@ -40,7 +40,8 @@ func _on_enemy_gold_updated(_new_amount: int):
 	Egold_label.text = "Gold: " + str(_new_amount)
 
 func _on_enemy_unit_spawned(unit_name: String, _count: int):
-	show_notification("Enemy spawned " + unit_name)
+	#show_notification("Enemy spawned " + unit_name)
+	pass
 
 func _on_command_submitted(command: String):
 	player_commander.spawn_units(command, self)
