@@ -1,0 +1,98 @@
+[gd_scene load_steps=7 format=3 uid="uid://urjdpr8m7chs"]
+
+[ext_resource type="Script" path="res://UI/main_menu.gd" id="1_uueal"]
+[ext_resource type="Texture2D" uid="uid://bvs7muf2hqxtt" path="res://UI/Play_Idle.png" id="2_mdfp6"]
+[ext_resource type="Texture2D" uid="uid://5tw08dh4jcdj" path="res://UI/Play_Click.png" id="3_7swof"]
+[ext_resource type="Texture2D" uid="uid://hkp48qwgxymy" path="res://UI/Play_Hover.png" id="4_b1i8k"]
+[ext_resource type="Texture2D" uid="uid://80i2epli4r5g" path="res://UI/Exit.png" id="5_w0qup"]
+[ext_resource type="Texture2D" uid="uid://c1j32e8aciy8t" path="res://UI/Exit_bg.png" id="6_vbq0a"]
+
+[node name="Mainmenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uueal")
+metadata/_edit_use_anchors_ = true
+
+[node name="Bg" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="defBg" type="ColorRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0980392, 0.054902, 0.12549, 1)
+
+[node name="Play_Btn" type="TextureButton" parent="Bg"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -185.0
+offset_top = 66.0
+offset_right = 185.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_mdfp6")
+texture_pressed = ExtResource("3_7swof")
+texture_hover = ExtResource("4_b1i8k")
+
+[node name="botBg" type="ColorRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -90.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Quit_Btn" type="TextureButton" parent="Bg"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -63.0
+offset_right = -104.0
+offset_bottom = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("5_w0qup")
+
+[node name="tmp" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -74.0
+offset_right = -208.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("6_vbq0a")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[connection signal="pressed" from="Bg/Play_Btn" to="." method="_on_play_btn_pressed"]
+[connection signal="pressed" from="Bg/Quit_Btn" to="." method="_on_quit_btn_pressed"]
